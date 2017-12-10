@@ -34,9 +34,8 @@ public class Sql
         string database = database_global;
         string str = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
         //Integrated Security 综合安全，集成安全
-        //try
-        //{
-            //sqlstring = "select * from users where AccountName = '@here'";
+        try
+        {
 
 
             string ConnectionString = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
@@ -53,11 +52,11 @@ public class Sql
             }
             cmd.ExecuteNonQuery();
             return null;
-        //}
-        //catch
-        //{
-            //return "数据库连接失败";
-        //}
+        }
+        catch
+        {
+            return "数据库连接失败";
+        }
     }
 
     /// <summary>
@@ -68,30 +67,37 @@ public class Sql
     /// <returns></returns>
     public DataTable Sql_Get_Datatable(string sqlstring, params string[] items)
     {
-        string database = database_global;
-        string str = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
-        //Integrated Security 综合安全，集成安全
-
-        string ConnectionString = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
-        SqlConnection conn = new SqlConnection(ConnectionString);
-        conn.Open();
-        SqlCommand cmd = new SqlCommand();     //生成新的连接            
-        cmd.Connection = conn;
-        cmd.CommandText = sqlstring;
-
-        int i;
-        for (i = 0; i < items.Length; i += 2)          //循环替换字符串中相应位置的参数，一个@something 对应一个 somenting
+        try
         {
-            cmd.Parameters.Add("@"+items[i], SqlDbType.NVarChar);
-            cmd.Parameters["@" + items[i]].Value = items[i+1];              
-        }         
-            
-        SqlDataAdapter da = new SqlDataAdapter(cmd); //注意，此处参数应为设置完成的cmd
-        DataTable dt = new DataTable();
-        da.Fill(dt);
-        conn.Close();
-        conn.Dispose();
-        return dt;     
+            string database = database_global;
+            string str = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
+            //Integrated Security 综合安全，集成安全
+
+            string ConnectionString = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();     //生成新的连接            
+            cmd.Connection = conn;
+            cmd.CommandText = sqlstring;
+
+            int i;
+            for (i = 0; i < items.Length; i += 2)          //循环替换字符串中相应位置的参数，一个@something 对应一个 somenting
+            {
+                cmd.Parameters.Add("@" + items[i], SqlDbType.NVarChar);
+                cmd.Parameters["@" + items[i]].Value = items[i + 1];
+            }
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd); //注意，此处参数应为设置完成的cmd
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            conn.Close();
+            conn.Dispose();
+            return dt;
+        }
+        catch
+        {
+            return null;
+        }
         
     }
 
@@ -102,17 +108,24 @@ public class Sql
     /// <returns></returns>
     public string SqlDealBasic(string sqlstring)
     {
-        string database = database_global;
-        string str = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
-        //Integrated Security 综合安全，集成安全
-        string ConnectionString = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
-        SqlConnection conn = new SqlConnection(ConnectionString);
-        conn.Open();
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = conn;
-        cmd.CommandText = sqlstring;
-        cmd.ExecuteNonQuery();
-        return null;
+        try
+        {
+            string database = database_global;
+            string str = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
+            //Integrated Security 综合安全，集成安全
+            string ConnectionString = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = conn;
+            cmd.CommandText = sqlstring;
+            cmd.ExecuteNonQuery();
+            return null;
+        }
+        catch
+        {
+            return "数据库连接失败";
+        }
     }
 
     /// <summary>
@@ -122,21 +135,28 @@ public class Sql
     /// <returns></returns>
     public DataTable SqlGetTableBasic(string sqlstring)
     {
-        string database = database_global;
-        string str = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
-        //Integrated Security 综合安全，集成安全
+        try
+        {
+            string database = database_global;
+            string str = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
+            //Integrated Security 综合安全，集成安全
 
-        string ConnectionString = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
-        SqlConnection conn = new SqlConnection(ConnectionString);
-        conn.Open();
-        SqlCommand cmd = new SqlCommand();     //生成新的连接            
-        cmd.Connection = conn;
-        cmd.CommandText = sqlstring;
-        SqlDataAdapter da = new SqlDataAdapter(cmd); //注意，此处参数应为设置完成的cmd
-        DataTable dt = new DataTable();
-        da.Fill(dt);
-        conn.Close();
-        conn.Dispose();
-        return dt;
+            string ConnectionString = @"server=DESKTOP-8ROVJ5G;Integrated Security=SSPI;database=" + database;
+            SqlConnection conn = new SqlConnection(ConnectionString);
+            conn.Open();
+            SqlCommand cmd = new SqlCommand();     //生成新的连接            
+            cmd.Connection = conn;
+            cmd.CommandText = sqlstring;
+            SqlDataAdapter da = new SqlDataAdapter(cmd); //注意，此处参数应为设置完成的cmd
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            conn.Close();
+            conn.Dispose();
+            return dt;
+        }
+        catch
+        {
+            return null;
+        }
     }
 }
